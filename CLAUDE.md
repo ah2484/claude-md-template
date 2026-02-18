@@ -13,6 +13,13 @@
 - Prefer 3 similar lines of code over a premature abstraction.
 - The right amount of complexity is the minimum needed for the current task.
 
+### Engineering Preferences
+- **DRY is important**—flag repetition aggressively.
+- **Well-tested code is non-negotiable**; I'd rather have too many tests than too few.
+- I want code that's "engineered enough" — not under-engineered (fragile, hacky) and not over-engineered (premature abstraction, unnecessary complexity).
+- I err on the side of handling more edge cases, not fewer; **thoughtfulness > speed**.
+- Bias toward explicit over clever.
+
 ### Ask Before Assuming
 - **Never make assumptions on my behalf.** If requirements are unclear, ask for clarification.
 - Surface inconsistencies when you find them.
@@ -37,35 +44,100 @@
 
 ## Workflow Guidelines
 
-### Plan Mode First
+### Architect Then Execute
 - For non-trivial changes, **start in plan mode** to discuss approach before implementation.
 - Break complex tasks into clear, sequential steps.
 - Identify potential risks or edge cases upfront.
 - Get approval on the approach before writing code.
+- Expect active interruption and redirection—when I course-correct, adapt immediately without being defensive.
 
-### Iterative Development
+### Iterative Refinement
 - Make small, incremental changes that can be reviewed easily.
 - Commit logical units of work separately.
 - Test each change before moving to the next.
+- Support rapid feedback cycles—when I ask for adjustments (spacing, typography, layout, etc.), apply them precisely without adding unrequested changes.
+
+### Multi-Concern Sessions
+- I often batch multiple concerns into a single session (bugs, feature requests, git operations).
+- Handle each concern sequentially with clear transitions.
+- Don't conflate separate concerns—keep fixes isolated.
 
 ### Communication
 - Explain what you're about to do before doing it.
 - If a task is taking longer than expected, communicate progress and blockers.
-- When presenting options, explain pros/cons without time estimates.
+- When presenting options, explain pros/cons **without time estimates**.
+- **Do not assume my priorities on timeline or scale.**
+- When I redirect your approach, treat it as valuable input—I have strong opinions about implementation details and maintain tight directional control.
+
+---
+
+## Code Review Process
+
+When reviewing code (in plan mode or when asked), follow this structured process. **Before starting, ask if I want:**
+
+1. **BIG CHANGE**: Work through interactively, one section at a time (Architecture → Code Quality → Tests → Performance) with at most 4 top issues per section.
+2. **SMALL CHANGE**: Work through interactively ONE question per review section.
+
+### Review Stages
+
+#### 1. Architecture Review
+Evaluate:
+- Overall system design and component boundaries.
+- Dependency graph and coupling concerns.
+- Data flow patterns and potential bottlenecks.
+- Scaling characteristics and single points of failure.
+- Security architecture (auth, data access, API boundaries).
+
+#### 2. Code Quality Review
+Evaluate:
+- Code organization and module structure.
+- DRY violations—be aggressive here.
+- Error handling patterns and missing edge cases (call these out explicitly).
+- Technical debt hotspots.
+- Areas that are over-engineered or under-engineered relative to my preferences.
+
+#### 3. Test Review
+Evaluate:
+- Test coverage gaps (unit, integration, e2e).
+- Test quality and assertion strength.
+- Missing edge case coverage—be thorough.
+- Untested failure modes and error paths.
+
+#### 4. Performance Review
+Evaluate:
+- N+1 queries and database access patterns.
+- Memory-usage concerns.
+- Caching opportunities.
+- Slow or high-complexity code paths.
+
+### For Each Issue Found
+For every specific issue (bug, smell, design concern, or risk):
+- Describe the problem concretely, with file and line references.
+- Present 2–3 options, including "do nothing" where that's reasonable.
+- For each option, specify: implementation effort, risk, impact on other code, and maintenance burden.
+- Give your recommended option and why, mapped to my engineering preferences above.
+- Then explicitly ask whether I agree or want to choose a different direction before proceeding.
+
+### Review Formatting Rules
+- **NUMBER** each issue (Issue 1, Issue 2, etc.).
+- Give **LETTERS** for options within each issue (Option A, Option B, etc.).
+- When using AskUserQuestion, make sure each option clearly labels the issue NUMBER and option LETTER so context is not lost.
+- Make the recommended option always the 1st option.
+- **After each review section, pause and ask for my feedback before moving on.**
 
 ---
 
 ## Bash Guidelines
 
-### Output Buffering
+### IMPORTANT: Avoid commands that cause output buffering issues
 - **DO NOT** pipe output through `head`, `tail`, `less`, or `more` when monitoring or checking command output.
 - **DO NOT** use `| head -n X` or `| tail -n X` to truncate output—these cause buffering problems.
 - Instead, let commands complete fully, or use `--max-lines` flags if the command supports them.
 - For log monitoring, prefer reading files directly rather than piping through filters.
 
-### Command Execution
+### When checking command output:
 - Run commands directly without pipes when possible.
-- Use command-specific flags to limit output (e.g., `git log -n 10` instead of `git log | head -10`).
+- If you need to limit output, use command-specific flags (e.g., `git log -n 10` instead of `git log | head -10`).
 - Avoid chained pipes that can cause output to buffer indefinitely.
 - Always quote file paths that contain spaces.
 
@@ -77,11 +149,14 @@
 - Only add error handling at system boundaries (user input, external APIs).
 - Trust internal code and framework guarantees.
 - Don't add validation for scenarios that can't happen.
+- But err on the side of handling more edge cases at boundaries—thoughtfulness over speed.
 
 ### Testing
+- **Well-tested code is non-negotiable.**
 - Write tests first when implementing new features (TDD approach gives leverage).
 - Run tests after making changes to verify correctness.
 - Don't skip tests to save time.
+- I'd rather have too many tests than too few.
 
 ### Security
 - Never commit secrets, API keys, or credentials.
