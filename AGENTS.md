@@ -136,6 +136,11 @@ When reviewing or writing code, evaluate against these criteria:
 - Create feature branches for new work.
 - Keep branches focused on a single feature or fix.
 
+### Push Immediately
+- **Always push local changes to GitHub immediately after committing.** Do not let local commits sit unpushed.
+- This ensures Vercel deployments stay in sync and collaborators always have the latest code.
+- If working on a feature branch, push the branch. If on main, push to main.
+
 ---
 
 ## Stack-Specific Guidelines

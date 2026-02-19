@@ -176,7 +176,11 @@ For every specific issue (bug, smell, design concern, or risk):
 ### Branches
 - Create feature branches for new work.
 - Keep branches focused on a single feature or fix.
-- Push regularly to maintain backup and enable collaboration.
+
+### Push Immediately
+- **Always push local changes to GitHub immediately after committing.** Do not let local commits sit unpushed.
+- This ensures Vercel deployments stay in sync and collaborators always have the latest code.
+- If working on a feature branch, push the branch. If on main, push to main.
 
 ---
 
