@@ -294,6 +294,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ```
 
+### Vercel Environment Variable Gotcha
+
+Vercel environment variables often contain trailing `\n` (newline) characters from copy-paste. This causes silent auth failures, API 401s, and other hard-to-debug issues.
+
+**Always `.trim()` environment variables when reading them:**
+
+```typescript
+const apiKey = process.env.MY_API_KEY?.trim();
+```
+
+If an API key or secret is failing only in production (but works locally), a trailing newline in the Vercel env var is the most likely cause.
+
 ---
 
 ## Quick Reference
