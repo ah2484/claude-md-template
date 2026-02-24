@@ -13,6 +13,10 @@
 - Prefer 3 similar lines of code over a premature abstraction.
 - The right amount of complexity is the minimum needed for the current task.
 
+### No Laziness
+- **Find root causes.** No temporary fixes. Senior developer standards.
+- Changes should only touch what's necessary. Avoid introducing bugs.
+
 ### Engineering Preferences
 - **DRY is important**—flag repetition aggressively.
 - **Well-tested code is non-negotiable**; I'd rather have too many tests than too few.
@@ -46,9 +50,13 @@
 
 ### Architect Then Execute
 - For non-trivial changes, **start in plan mode** to discuss approach before implementation.
+- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions).
 - Break complex tasks into clear, sequential steps.
 - Identify potential risks or edge cases upfront.
+- Write detailed specs upfront to reduce ambiguity.
 - Get approval on the approach before writing code.
+- If something goes sideways, **STOP and re-plan immediately**—don't keep pushing.
+- Use plan mode for verification steps, not just building.
 - Expect active interruption and redirection—when I course-correct, adapt immediately without being defensive.
 
 ### Iterative Refinement
@@ -56,6 +64,36 @@
 - Commit logical units of work separately.
 - Test each change before moving to the next.
 - Support rapid feedback cycles—when I ask for adjustments (spacing, typography, layout, etc.), apply them precisely without adding unrequested changes.
+
+### Subagent Strategy
+- Use subagents liberally to keep main context window clean.
+- Offload research, exploration, and parallel analysis to subagents.
+- For complex problems, throw more compute at it via subagents.
+- One task per subagent for focused execution.
+
+### Verification Before Done
+- Never mark a task complete without proving it works.
+- Diff behavior between main and your changes when relevant.
+- Ask yourself: "Would a staff engineer approve this?"
+- Run tests, check logs, demonstrate correctness.
+
+### Demand Elegance (Balanced)
+- For non-trivial changes: pause and ask "is there a more elegant way?"
+- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution."
+- Skip this for simple, obvious fixes—don't over-engineer.
+- Challenge your own work before presenting it.
+
+### Autonomous Bug Fixing
+- When given a bug report: just fix it. Don't ask for hand-holding.
+- Point at logs, errors, failing tests—then resolve them.
+- Zero context switching required from the user.
+- Go fix failing CI tests without being told how.
+
+### Self-Improvement Loop
+- After ANY correction from the user: update `tasks/lessons.md` with the pattern.
+- Write rules for yourself that prevent the same mistake.
+- Ruthlessly iterate on these lessons until mistake rate drops.
+- Review lessons at session start for relevant project.
 
 ### Multi-Concern Sessions
 - I often batch multiple concerns into a single session (bugs, feature requests, git operations).
@@ -68,6 +106,17 @@
 - When presenting options, explain pros/cons **without time estimates**.
 - **Do not assume my priorities on timeline or scale.**
 - When I redirect your approach, treat it as valuable input—I have strong opinions about implementation details and maintain tight directional control.
+
+---
+
+## Task Management
+
+1. **Plan First**: Write plan to `tasks/todo.md` with checkable items.
+2. **Verify Plan**: Check in before starting implementation.
+3. **Track Progress**: Mark items complete as you go.
+4. **Explain Changes**: High-level summary at each step.
+5. **Document Results**: Add review section to `tasks/todo.md`.
+6. **Capture Lessons**: Update `tasks/lessons.md` after corrections.
 
 ---
 
