@@ -13,12 +13,17 @@
 - Prefer 3 similar lines of code over a premature abstraction.
 - The right amount of complexity is the minimum needed for the current task.
 
+### No Laziness
+- **Find root causes.** No temporary fixes. Senior developer standards.
+- Changes should only touch what's necessary. Avoid introducing bugs.
+
 ### Engineering Preferences
 - **DRY is important**—flag repetition aggressively.
 - **Well-tested code is non-negotiable**; I'd rather have too many tests than too few.
 - Code should be "engineered enough" — not under-engineered (fragile, hacky) and not over-engineered (premature abstraction, unnecessary complexity).
 - Err on the side of handling more edge cases, not fewer; **thoughtfulness > speed**.
 - Bias toward explicit over clever.
+- **Minimal diff**: achieve the goal with the fewest new abstractions and files touched.
 
 ### Do Not Assume
 - If requirements are ambiguous, prefer the most conservative interpretation.
@@ -41,11 +46,22 @@
 
 ---
 
+## Plan Review Mode
+
+Review plans thoroughly before making any code changes. For every issue or recommendation, explain the concrete tradeoffs, give an opinionated recommendation, and leave a PR comment asking for input before assuming a direction.
+
+### Priority Hierarchy
+
+If running low on context or compressing output: **Step 0 > Test diagram > Opinionated recommendations > Everything else.** Never skip Step 0 or the test diagram.
+
+---
+
 ## Working Agreements
 
 ### Task Execution
 - Break complex tasks into clear, sequential steps.
 - Identify potential risks or edge cases upfront.
+- Write detailed specs upfront to reduce ambiguity.
 - Make small, incremental commits that can be reviewed easily.
 - Each commit should represent a logical unit of work.
 - Test each change before moving to the next.
@@ -55,6 +71,23 @@
 - Write clear PR descriptions that explain the "why" behind changes.
 - If the task touches multiple concerns, note what was and wasn't addressed.
 - When making adjustments (spacing, typography, layout, etc.), apply them precisely without adding unrequested changes.
+
+### Verification Before Done
+- Never mark a task complete without proving it works.
+- Diff behavior between main and your changes when relevant.
+- Ask yourself: "Would a staff engineer approve this?"
+- Run tests, check logs, demonstrate correctness.
+
+### Demand Elegance (Balanced)
+- For non-trivial changes: pause and ask "is there a more elegant way?"
+- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution."
+- Skip this for simple, obvious fixes—don't over-engineer.
+- Challenge your own work before presenting it.
+
+### Autonomous Bug Fixing
+- When given a bug report: just fix it. Don't ask for hand-holding.
+- Point at logs, errors, failing tests—then resolve them.
+- Go fix failing CI tests without being told how.
 
 ### When In Doubt
 - Prefer doing less over doing more—it's easier to add than to remove.
@@ -184,6 +217,20 @@ When reviewing or writing code, evaluate against these criteria:
 - Don't refactor files you're only reading.
 - Don't add logging, metrics, or observability unless asked.
 - Don't upgrade dependencies unless directly relevant to the task.
+
+---
+
+## Leverage Patterns
+
+### Declarative Over Imperative
+- Give success criteria rather than step-by-step instructions.
+- Let the agent loop until goals are met.
+- Write naive algorithms first, then optimize while preserving correctness.
+
+### Test-Driven Development
+- Write tests first as success criteria.
+- Use tests to verify correctness automatically.
+- Tests provide leverage by enabling confident iteration.
 
 ---
 

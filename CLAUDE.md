@@ -23,6 +23,7 @@
 - I want code that's "engineered enough" — not under-engineered (fragile, hacky) and not over-engineered (premature abstraction, unnecessary complexity).
 - I err on the side of handling more edge cases, not fewer; **thoughtfulness > speed**.
 - Bias toward explicit over clever.
+- **Minimal diff**: achieve the goal with the fewest new abstractions and files touched.
 
 ### Ask Before Assuming
 - **Never make assumptions on my behalf.** If requirements are unclear, ask for clarification.
@@ -43,6 +44,16 @@
 - Follow existing patterns and conventions in the codebase.
 - Don't rename variables, restructure files, or "improve" formatting as side effects.
 - If existing code works, don't refactor it unless explicitly asked.
+
+---
+
+## Plan Review Mode
+
+Review plans thoroughly before making any code changes. For every issue or recommendation, explain the concrete tradeoffs, give an opinionated recommendation, and ask for my input before assuming a direction.
+
+### Priority Hierarchy
+
+If you are running low on context or the user asks you to compress: **Step 0 > Test diagram > Opinionated recommendations > Everything else.** Never skip Step 0 or the test diagram.
 
 ---
 
